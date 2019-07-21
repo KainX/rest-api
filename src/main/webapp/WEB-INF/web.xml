@@ -4,12 +4,16 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <!-- <servlet>
+  <servlet>
   	<servlet-name>RestFul API</servlet-name>
-  	<servlet-class>com.example.javaee.HelloWorldResource</servlet-class>
+  	<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+  	<init-param>
+  		<param-name>jersery.config.server.provider.packages</param-name>
+  		<param-value>com.example</param-value>
+  	</init-param>
   </servlet>
   <servlet-mapping>
   	<servlet-name>RestFul API</servlet-name>
   	<url-pattern>/webapi/*</url-pattern>
-  </servlet-mapping> -->
+  </servlet-mapping> 
 </web-app>
