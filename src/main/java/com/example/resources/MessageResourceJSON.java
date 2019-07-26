@@ -19,7 +19,7 @@ public class MessageResourceJSON {
 	public List<Message> getMessage() {
 		MessageService messageService = new MessageService();
 		List<Message> mensajes = new ArrayList<>();
-		mensajes = messageService.getMessages();
+		mensajes = messageService.getAllMessages();
 		return mensajes;
 	}
 }
