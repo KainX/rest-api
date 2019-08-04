@@ -19,17 +19,16 @@ public class MessageService {
 		return new ArrayList<Message>(messages.values());
 	}
 	
-	public Message getMessage(long id) {
-		
-		return null;
+	public Message getMessage(long id) {		
+		return DataBase.getMessage(id);
 	}
 	
-	public Message addMessage(Message message) {
-		return null;
+	public Message addMessage(Message message) {		
+		return DataBase.addMessage(message);
 	}
 	
 	public Message updateMessage(Message message) {
-		return null;
+		return DataBase.updateMessage(message);
 	}
 	
 	public Message removeMessage(long id) {

@@ -24,6 +24,12 @@ public class Message {
 		this.created = new Date();
 	}
 	
+	public Message(String message, String author) {
+		this.message = message;
+		this.author = author;
+		this.created = new Date();
+	}
+	
 	public long getId() {
 		return id;
 	}
