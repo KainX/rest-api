@@ -30,6 +30,7 @@ public class DataBase {
 	
 	public static Message addMessage(Message message) {
 		if(message != null) {
+			message = new Message(message.getMessage(), message.getAuthor()); //Points the message reference to a new Message instance
 			message.setId(++id);
 			messages.put(id, message);
 			return messages.get(id);
@@ -40,7 +41,9 @@ public class DataBase {
 	public static Message updateMessage(Message message) {
 		if(message != null) {
 			long currentId = message.getId();
-			messages.replace(currentId, message);
+			//message = new Message(message.getMessage(), message.getAuthor());
+			
+			messages.put(currentId, message);
 			return messages.get(currentId);
 		}
 		return null;

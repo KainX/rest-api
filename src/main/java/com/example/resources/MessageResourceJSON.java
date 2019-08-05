@@ -3,7 +3,10 @@ package com.example.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,12 +16,13 @@ import com.example.models.Message;
 import com.example.services.MessageService;
 
 @Path("messages/json")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class MessageResourceJSON {
 	
 	private static final MessageService messageService = new MessageService();
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Message> getMessages() {
 		List<Message> mensajes = new ArrayList<>();
 		mensajes = messageService.getAllMessages();
@@ -32,20 +36,18 @@ public class MessageResourceJSON {
 	 */
 	@GET
 	@Path("{messageId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message getMessage(@PathParam("messageId")long id) {
 		return messageService.getMessage(id);
 	}
 	
 	/**
-	 * Adds a new Message
+	 * Adds a new message
+	 * @param message a message in json format using an rest client
 	 * @return the added message
 	 */
-	@GET
-	@Path("add")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Message addMessage() {
-		Message message = new Message("No message", "Shigeru Miyamoto");
+	@POST	
+	public Message addMessage(Message message) {
+		//Message message = new Message("No message", "Shigeru Miyamoto");		
 		return messageService.addMessage(message);
 	}
 	
@@ -53,11 +55,11 @@ public class MessageResourceJSON {
 	 * Update an existing Message resource
 	 * @return the updated Message
 	 */
-	@GET
-	@Path("update")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Message updateMessage() {
-		Message message = new Message(2L, "This is a new message", "Hideo Kojima");
+	@PUT
+	@Path("{id}")
+	public Message updateMessage(@PathParam("id")long id, Message message) {
+		//Message message = new Message(2L, "This is a new message", "Hideo Kojima");
+		message.setId(id);
 		return messageService.updateMessage(message);
 	}
 }
