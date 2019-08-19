@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -61,5 +62,11 @@ public class MessageResourceJSON {
 		//Message message = new Message(2L, "This is a new message", "Hideo Kojima");
 		message.setId(id);
 		return messageService.updateMessage(message);
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public void removeMessage(@PathParam("id")long id) {
+		messageService.removeMessage(id);
 	}
 }

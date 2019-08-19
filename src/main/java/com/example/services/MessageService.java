@@ -31,7 +31,7 @@ public class MessageService {
 		return DataBase.updateMessage(message);
 	}
 	
-	public Message removeMessage(long id) {
-		return null;
+	public void removeMessage(long id) {
+		DataBase.removeMessage(id);
 	}
 }

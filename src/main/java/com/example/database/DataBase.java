@@ -48,4 +48,10 @@ public class DataBase {
 		}
 		return null;
 	}
+	
+	public static void removeMessage(long id) {
+		if(id > 0) {
+			messages.remove(id);
+		}
+	}
 }
