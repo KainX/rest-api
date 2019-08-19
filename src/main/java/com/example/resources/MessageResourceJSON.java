@@ -1,6 +1,5 @@
 package com.example.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -25,9 +24,7 @@ public class MessageResourceJSON {
 	
 	@GET
 	public List<Message> getMessages() {
-		List<Message> mensajes = new ArrayList<>();
-		mensajes = messageService.getAllMessages();
-		return mensajes;
+		return messageService.getAllMessages();
 	}
 	
 	/**
