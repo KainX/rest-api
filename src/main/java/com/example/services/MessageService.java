@@ -23,6 +23,14 @@ public class MessageService {
 		return DataBase.getMessage(id);
 	}
 	
+	public List<Message> getAllMessagesByYear(int year){
+		return DataBase.getAllMessagesByYear(year);
+	}
+	
+	public List<Message> getAllMessagesPaginated(int start, int size) {
+		return DataBase.getAllMessagesPaginated(start, size);
+	}
+	
 	public Message addMessage(Message message) {		
 		return DataBase.addMessage(message);
 	}

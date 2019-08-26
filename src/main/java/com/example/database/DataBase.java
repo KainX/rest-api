@@ -1,13 +1,17 @@
 package com.example.database;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import com.example.models.Message;
 import com.example.models.Profile;
 
 /**
- * Database simulation
+ * Database emulation
  * @author Kain
  *
  */
@@ -31,6 +35,32 @@ public class DataBase {
 	
 	public static Message getMessage(long id) {
 		return messages.get(id);
+	}
+	
+	/**
+	 * Gets a list of messages by year using a stream.
+	 * @param year
+	 * @return
+	 */
+	public static List<Message> getAllMessagesByYear(int year){
+		Calendar calendar = Calendar.getInstance();
+		List<Message> messagesList = new ArrayList<>();
+		Stream<Message> mStream = messages.values().stream();		
+		mStream.forEach(e -> {
+				calendar.setTime(e.getCreated());
+				if(calendar.get(Calendar.YEAR) == year) {
+					messagesList.add(e);
+				}
+			});
+		return messagesList;
+	}
+	
+	public static List<Message> getAllMessagesPaginated(int start, int size){
+		List<Message> messagesList = new ArrayList<>(messages.values());
+		if(start >= messages.size()) {
+			return new ArrayList<Message>();
+		}
+		return messagesList.subList(start, start+size);
 	}
 	
 	public static Message addMessage(Message message) {
