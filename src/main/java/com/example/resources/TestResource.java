@@ -6,7 +6,10 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.MatrixParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 @Produces(MediaType.TEXT_PLAIN)
 @Path("test")
@@ -20,4 +23,9 @@ public class TestResource {
 				+ " Cookie param: " + param3;
 	}
 	
+	@GET
+	@Path("context")
+	public String getContextInfo(@Context UriInfo info,@Context HttpHeaders header) {
+		return "Uri: " + info.getBaseUri().toString() + " Header: " + header.getHeaderString("param2");
+	}
 }
