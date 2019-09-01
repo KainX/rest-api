@@ -21,7 +21,7 @@ public class Message {
 	 * No argument constructor is needed for the xml and json converter
 	 */
 	public Message() {}
-	/*
+	
 	public Message(long id, String message, String author, Map<Long, Comment> comments) {
 		this.id = id;
 		this.message = message;
@@ -29,7 +29,7 @@ public class Message {
 		this.comments = comments;
 		this.created = new Date();
 	}
-	*/
+	
 	public Message(long id, String message, String author) {
 		this.id = id;
 		this.message = message;
@@ -74,15 +74,17 @@ public class Message {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
+	
+	/**
+	 * Annotations in this method make comments unavailable for xml and json conversion
+	 * @return
+	 */
 	@XmlTransient
 	@JsonbTransient
 	public Map<Long, Comment> getComments() {
 		return comments;
 	}
 
-	@XmlTransient
-	@JsonbTransient
 	public void setComments(Map<Long, Comment> comments) {
 		this.comments = comments;
 	}

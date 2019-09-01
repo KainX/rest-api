@@ -77,8 +77,8 @@ public class MessageResourceJSON {
 	 * Returns an instance of CoomentResource to handle comment subresource http requests
 	 * @return an instance of CoomentResource
 	 */
-	/*@Path("{messageId}/comments")
+	@Path("{messageId}/comments")
 	public CommentResource getCommentResource() {
 		return new CommentResource();		
-	}*/
+	}
 }

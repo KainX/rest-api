@@ -3,7 +3,6 @@ package com.example.models;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Class for the Comment subresource

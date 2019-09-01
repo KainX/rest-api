@@ -31,9 +31,8 @@ public class DataBase {
 	static {
 		comments1.put(1L, new Comment(1L, "This is just a comment", "Jon Doe"));
 		comments2.put(2L, new Comment(2L, "Esto es solo un comentario", "Juan Pérez"));
-		messages.put(++messageId, new Message(messageId, "Hola mundo!", "Juan Pérez"));
-		messages.put(++messageId, new Message(messageId, "Hello world!", "Jon Doe"));
-		
+		messages.put(++messageId, new Message(messageId, "Hola mundo!", "Juan Pérez", comments1));
+		messages.put(++messageId, new Message(messageId, "Hello world!", "Jon Doe", comments2));		
 		profiles.put("JuanPerez", new Profile(++profileId, "JuanPerez", "Juan", "Pérez"));
 		profiles.put("JonDoe", new Profile(++profileId, "JonDoe", "Jon", "Doe"));		
 	}
@@ -132,8 +131,6 @@ public class DataBase {
 	}
 	
 	public static Map<Long, Comment> getAllComments(long id){
-		messages.get(1).setComments(comments1);
-		messages.get(2).setComments(comments2);
 		if(id > 0) {
 			return messages.get(id).getComments();
 		}

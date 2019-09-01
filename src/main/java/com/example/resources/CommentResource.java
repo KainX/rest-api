@@ -16,11 +16,7 @@ public class CommentResource {
 	private static final CommentService commentService = new CommentService();
 	
 	@GET
-	/*public List<Comment> getAllComments(@PathParam("{messageId}") long id){
+	public List<Comment> getAllComments(@PathParam("messageId") long id){
 		return commentService.getAllComments(id);
-	}*/
-	public String getTest() {
-		return "lolxd";
 	}
-
 }
