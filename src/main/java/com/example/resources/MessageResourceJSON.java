@@ -2,6 +2,7 @@ package com.example.resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -23,7 +24,7 @@ public class MessageResourceJSON {
 	private static final MessageService messageService = new MessageService();
 	
 	@GET
-	public List<Message> getMessages(MessageParamBean param) {
+	public List<Message> getMessages(@BeanParam MessageParamBean param) {
 		if(param.getYear() > 0)
 			return messageService.getAllMessagesByYear(param.getYear());
 		if((param.getStart() >= 0) && (param.getSize() > 0))
