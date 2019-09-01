@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.example.models.Comment;
 import com.example.models.Message;
 import com.example.models.Profile;
 
@@ -19,12 +20,20 @@ public class DataBase {
 	
 	private static Map<Long, Message> messages = new HashMap<>();
 	private static Map<String, Profile> profiles = new HashMap<>();
+	private static Map<Long, Comment> comments1 = new HashMap<>();
+	private static Map<Long, Comment> comments2 = new HashMap<>();
 	private static long messageId = 0;
 	private static long profileId = 0;
 	
+	/**
+	 * Hardcoded data for testing
+	 */
 	static {
+		comments1.put(1L, new Comment(1L, "This is just a comment", "Jon Doe"));
+		comments2.put(2L, new Comment(2L, "Esto es solo un comentario", "Juan Pérez"));
 		messages.put(++messageId, new Message(messageId, "Hola mundo!", "Juan Pérez"));
 		messages.put(++messageId, new Message(messageId, "Hello world!", "Jon Doe"));
+		
 		profiles.put("JuanPerez", new Profile(++profileId, "JuanPerez", "Juan", "Pérez"));
 		profiles.put("JonDoe", new Profile(++profileId, "JonDoe", "Jon", "Doe"));		
 	}
@@ -120,5 +129,14 @@ public class DataBase {
 		if(!profileName.isEmpty()) {
 			profiles.remove(profileName);
 		}
+	}
+	
+	public static Map<Long, Comment> getAllComments(long id){
+		messages.get(1).setComments(comments1);
+		messages.get(2).setComments(comments2);
+		if(id > 0) {
+			return messages.get(id).getComments();
+		}
+		return null;
 	}
 }

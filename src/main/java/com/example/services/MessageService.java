@@ -12,7 +12,7 @@ public class MessageService {
 	private Map<Long, Message> messages = DataBase.getAllMessages();
 	
 	/**
-	 * Simulating a data access to a db
+	 * Emulating a data access to a db
 	 * @return a list of messages
 	 */
 	public List<Message> getAllMessages(){		

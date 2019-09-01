@@ -71,4 +71,13 @@ public class MessageResourceJSON {
 	public void removeMessage(@PathParam("id")long id) {
 		messageService.removeMessage(id);
 	}
+	
+	/**
+	 * Returns an instance of CoomentResource to handle comment subresource http requests
+	 * @return an instance of CoomentResource
+	 */
+	/*@Path("{messageId}/comments")
+	public CommentResource getCommentResource() {
+		return new CommentResource();		
+	}*/
 }
