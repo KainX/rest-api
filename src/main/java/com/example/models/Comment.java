@@ -25,6 +25,12 @@ public class Comment {
 		this.author = author;
 		created = new Date();
 	}
+	
+	public Comment(String comment, String author) {		
+		this.comment = comment;
+		this.author = author;
+		created = new Date();
+	}
 
 	public long getId() {
 		return id;

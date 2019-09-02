@@ -24,13 +24,14 @@ public class DataBase {
 	private static Map<Long, Comment> comments2 = new HashMap<>();
 	private static long messageId = 0;
 	private static long profileId = 0;
+	private static long commentId = 0;
 	
 	/**
 	 * Hardcoded data for testing
 	 */
 	static {
-		comments1.put(1L, new Comment(1L, "This is just a comment", "Jon Doe"));
-		comments2.put(2L, new Comment(2L, "Esto es solo un comentario", "Juan Pérez"));
+		comments1.put(++commentId, new Comment(commentId, "This is just a comment", "Jon Doe"));
+		comments2.put(++commentId, new Comment(commentId, "Esto es solo un comentario", "Juan Pérez"));
 		messages.put(++messageId, new Message(messageId, "Hola mundo!", "Juan Pérez", comments1));
 		messages.put(++messageId, new Message(messageId, "Hello world!", "Jon Doe", comments2));		
 		profiles.put("JuanPerez", new Profile(++profileId, "JuanPerez", "Juan", "Pérez"));
@@ -135,5 +136,36 @@ public class DataBase {
 			return messages.get(id).getComments();
 		}
 		return null;
+	}
+	
+	public static Comment getComment(long messageId, long commentId) {
+		if((messageId > 0) && (commentId > 0)) {
+			return messages.get(messageId).getComments().get(commentId);
+		}
+		return null;
+	}
+	
+	public static Comment addComment(long messageId, Comment comment) {
+		if(messageId > 0) {
+			comment.setId(commentId);
+			messages.get(messageId).getComments().put(++commentId, comment);			
+			return getComment(messageId, commentId);
+		}
+		return null;
+	}
+	
+	public static Comment updateComment(long messageId, Comment comment) {
+		if((messageId > 0) && (comment != null)) {
+			long curCommentId = comment.getId();
+			messages.get(messageId).getComments().put(curCommentId, comment);
+			return getComment(messageId, curCommentId);
+		}
+		return null;
+	}
+	
+	public static void removeComment(long messageId, long commentId) {
+		if((messageId > 0) && (commentId > 0)) {
+			messages.get(messageId).getComments().remove(commentId);
+		}
 	}
 }
