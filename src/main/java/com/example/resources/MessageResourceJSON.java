@@ -1,5 +1,6 @@
 package com.example.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.BeanParam;
@@ -11,7 +12,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.example.models.Message;
 import com.example.services.MessageService;
@@ -50,9 +54,11 @@ public class MessageResourceJSON {
 	 * @return the added message
 	 */
 	@POST	
-	public Message addMessage(Message message) {
-		//Message message = new Message("No message", "Shigeru Miyamoto");		
-		return messageService.addMessage(message);
+	public Response addMessage(Message message, @Context UriInfo uriInfo) {
+		Message entity = messageService.addMessage(message);
+		URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(entity.getId())).build();		
+		//Returns the http response 201 Created and the location in the header
+		return Response.created(uri).entity(entity).build(); 
 	}
 	
 	/**
@@ -62,7 +68,6 @@ public class MessageResourceJSON {
 	@PUT
 	@Path("{id}")
 	public Message updateMessage(@PathParam("id")long id, Message message) {
-		//Message message = new Message(2L, "This is a new message", "Hideo Kojima");
 		message.setId(id);
 		return messageService.updateMessage(message);
 	}
