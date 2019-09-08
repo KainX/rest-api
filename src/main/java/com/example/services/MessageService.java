@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.database.DataBase;
+import com.example.exceptions.ResourceNotFoundException;
 import com.example.models.Message;
 
 public class MessageService {
@@ -19,8 +20,12 @@ public class MessageService {
 		return new ArrayList<Message>(messages.values());
 	}
 	
-	public Message getMessage(long id) {		
-		return DataBase.getMessage(id);
+	public Message getMessage(long id) {
+		Message message = DataBase.getMessage(id);
+		if(message == null) {
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
+		}
+		return message;
 	}
 	
 	public List<Message> getAllMessagesByYear(int year){
