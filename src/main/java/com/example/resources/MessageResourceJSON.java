@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.example.models.Link;
 import com.example.models.Message;
 import com.example.services.MessageService;
 
@@ -28,13 +29,19 @@ public class MessageResourceJSON {
 	private static final MessageService messageService = new MessageService();
 	
 	@GET
-	public List<Message> getMessages(@BeanParam MessageParamBean param) {
+	public List<Message> getMessages(@BeanParam MessageParamBean param, @Context UriInfo uriInfo) {
 		if(param.getYear() > 0)
 			return messageService.getAllMessagesByYear(param.getYear());
 		if((param.getStart() >= 0) && (param.getSize() > 0))
 			return messageService.getAllMessagesPaginated(param.getStart(), param.getSize());
-		else 
-			return messageService.getAllMessages();
+		else {
+			String uri = uriInfo.getAbsolutePathBuilder().build().toString();
+			List<Message> messages = messageService.getAllMessages();
+			messages.stream().forEach(e -> {
+				e.getLinks().add(new Link(uri + String.valueOf(e.getId()), "self"));
+			});
+			return messages;
+		}			
 	}
 	
 	/**
@@ -44,8 +51,11 @@ public class MessageResourceJSON {
 	 */
 	@GET
 	@Path("{messageId}")
-	public Message getMessage(@PathParam("messageId")long id) {
-		return messageService.getMessage(id);
+	public Message getMessage(@PathParam("messageId")long id, @Context UriInfo uriInfo) {
+		Message message = messageService.getMessage(id);
+		String uri = uriInfo.getAbsolutePathBuilder().build().toString();
+		message.getLinks().add(new Link(uri, "self"));
+		return message;
 	}
 	
 	/**
