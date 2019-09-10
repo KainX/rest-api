@@ -52,9 +52,10 @@ public class MessageResourceJSON {
 	@GET
 	@Path("{messageId}")
 	public Message getMessage(@PathParam("messageId")long id, @Context UriInfo uriInfo) {
-		Message message = messageService.getMessage(id);
-		String uri = uriInfo.getAbsolutePathBuilder().build().toString();
-		message.getLinks().add(new Link(uri, "self"));
+		Message message = messageService.getMessage(id);				
+		message.getLinks().add(getSelfLink(uriInfo));
+		message.getLinks().add(getProfileLink(uriInfo, message.getAuthor()));
+		message.getLinks().add(getCommentsLink(uriInfo, message.getId()));
 		return message;
 	}
 	
@@ -95,5 +96,30 @@ public class MessageResourceJSON {
 	@Path("{messageId}/comments")
 	public CommentResource getCommentResource() {
 		return new CommentResource();		
+	}
+	
+	/**
+	 * Get a Link object with the absoule path of the resource
+	 * @param uriInfo uri info of the request context
+	 * @return a Link object to the resource self
+	 */
+	private Link getSelfLink(UriInfo uriInfo) {
+		String uri = uriInfo.getAbsolutePathBuilder().build().toString();
+		return new Link(uri, "self");
+	}
+	
+	private Link getProfileLink(UriInfo uriInfo, String profileName) {
+		String uri = uriInfo.getBaseUriBuilder().path(ProfileResource.class)
+				.path(profileName).build().toString();
+		return new Link(uri, "profile");
+	}
+	
+	private Link getCommentsLink(UriInfo uriInfo, long id) {
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(MessageResourceJSON.class)
+				.path(MessageResourceJSON.class, "getCommentResource")
+				.resolveTemplate("messageId", id)
+				.build().toString();
+		return new Link(uri, "comments");
 	}
 }

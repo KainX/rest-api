@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import com.example.models.Comment;
 import com.example.services.CommentService;
 
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
 	

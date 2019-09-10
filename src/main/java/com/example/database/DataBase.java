@@ -32,8 +32,8 @@ public class DataBase {
 	static {
 		comments1.put(++commentId, new Comment(commentId, "This is just a comment", "Jon Doe"));
 		comments2.put(++commentId, new Comment(commentId, "Esto es solo un comentario", "Juan Pérez"));
-		messages.put(++messageId, new Message(messageId, "Hola mundo!", "Juan Pérez", comments1));
-		messages.put(++messageId, new Message(messageId, "Hello world!", "Jon Doe", comments2));		
+		messages.put(++messageId, new Message(messageId, "Hola mundo!", "JuanPerez", comments1));
+		messages.put(++messageId, new Message(messageId, "Hello world!", "JonDoe", comments2));		
 		profiles.put("JuanPerez", new Profile(++profileId, "JuanPerez", "Juan", "Pérez"));
 		profiles.put("JonDoe", new Profile(++profileId, "JonDoe", "Jon", "Doe"));		
 	}
