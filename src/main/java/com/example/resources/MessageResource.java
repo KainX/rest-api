@@ -21,15 +21,32 @@ import com.example.models.Link;
 import com.example.models.Message;
 import com.example.services.MessageService;
 
-@Path("messages/json")
+@Path("messages")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class MessageResourceJSON {
+public class MessageResource {
 	
 	private static final MessageService messageService = new MessageService();
 	
 	@GET
-	public List<Message> getMessages(@BeanParam MessageParamBean param, @Context UriInfo uriInfo) {
+	public List<Message> getMessagesJSON(@BeanParam MessageParamBean param, @Context UriInfo uriInfo) {
+		if(param.getYear() > 0)
+			return messageService.getAllMessagesByYear(param.getYear());
+		if((param.getStart() >= 0) && (param.getSize() > 0))
+			return messageService.getAllMessagesPaginated(param.getStart(), param.getSize());
+		else {
+			String uri = uriInfo.getAbsolutePathBuilder().build().toString();
+			List<Message> messages = messageService.getAllMessages();
+			messages.stream().forEach(e -> {
+				e.getLinks().add(new Link(uri + String.valueOf(e.getId()), "self"));
+			});
+			return messages;
+		}			
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_XML) //"Accepts" key and "application/xml" value
+	public List<Message> getMessagesXML(@BeanParam MessageParamBean param, @Context UriInfo uriInfo) {
 		if(param.getYear() > 0)
 			return messageService.getAllMessagesByYear(param.getYear());
 		if((param.getStart() >= 0) && (param.getSize() > 0))
@@ -116,8 +133,8 @@ public class MessageResourceJSON {
 	
 	private Link getCommentsLink(UriInfo uriInfo, long id) {
 		String uri = uriInfo.getBaseUriBuilder()
-				.path(MessageResourceJSON.class)
-				.path(MessageResourceJSON.class, "getCommentResource")
+				.path(MessageResource.class)
+				.path(MessageResource.class, "getCommentResource")
 				.resolveTemplate("messageId", id)
 				.build().toString();
 		return new Link(uri, "comments");
